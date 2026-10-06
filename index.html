@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Online Text Case Converter - Uppercase, Lowercase, Title Case</title>
+    <meta name="description" content="Convert your text easily to Uppercase, Lowercase, Title Case, Sentence Case, and more with our free online text case converter tool.">
+    <!-- Yahan aap apna Google Search Console verification meta tag aur Adsterra Popunder/Social Bar code paste karenge -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 12px;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        textarea:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .btn-success {
+            background-color: #27ae60;
+        }
+        .btn-success:hover {
+            background-color: #219653;
+        }
+        .stats {
+            font-size: 14px;
+            color: #555;
+            margin-top: 15px;
+            text-align: left;
+            background: #f1f2f6;
+            padding: 10px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Text Case Converter</h1>
+        <p>Type or paste your text below and choose the format you want.</p>
+        
+        <textarea id="text-input" placeholder="Type or paste your text here..." oninput="updateStats()"></textarea>
+
+        <div class="button-group">
+            <button class="btn" onclick="toUppercase()">UPPERCASE</button>
+            <button class="btn" onclick="toLowercase()">lowercase</button>
+            <button class="btn" onclick="toTitleCase()">Title Case</button>
+            <button class="btn" onclick="toSentenceCase()">Sentence case</button>
+            <button class="btn btn-success" onclick="copyText()">Copy Text</button>
+            <button class="btn" style="background-color: #e74c3c;" onclick="clearText()">Clear</button>
+        </div>
+
+        <div class="stats" id="stats-display">
+            Words: 0 | Characters: 0
+        </div>
+    </div>
+
+    <div style="max-width: 700px; margin: 30px auto; color: #555; font-size: 14px; line-height: 1.6; text-align: left;">
+        <h2>About Text Case Converter</h2>
+        <p>Our free online text case converter allows you to instantly change your text between uppercase, lowercase, title case, and sentence case. It is completely free and works directly in your browser.</p>
+    </div>
+
+    <script>
+        const textInput = document.getElementById("text-input");
+        const statsDisplay = document.getElementById("stats-display");
+
+        function toUppercase() {
+            textInput.value = textInput.value.toUpperCase();
+            updateStats();
+        }
+
+        function toLowercase() {
+            textInput.value = textInput.value.toLowerCase();
+            updateStats();
+        }
+
+        function toTitleCase() {
+            let words = textInput.value.toLowerCase().split(" ");
+            for (let i = 0; i < words.length; i++) {
+                if (words[i]) {
+                    words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+                }
+            }
+            textInput.value = words.join(" ");
+            updateStats();
+        }
+
+        function toSentenceCase() {
+            let text = textInput.value.toLowerCase();
+            let sentences = text.split('. ');
+            for (let i = 0; i < sentences.length; i++) {
+                if (sentences[i]) {
+                    sentences[i] = sentences[i][0].toUpperCase() + sentences[i].substr(1);
+                }
+            }
+            textInput.value = sentences.join('. ');
+            updateStats();
+        }
+
+        function copyText() {
+            if(textInput.value === "") return;
+            navigator.clipboard.writeText(textInput.value);
+            alert("Text copied to clipboard!");
+        }
+
+        function clearText() {
+            textInput.value = "";
+            updateStats();
+        }
+
+        function updateStats() {
+            let text = textInput.value;
+            let charCount = text.length;
+            let wordCount = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
+            statsDisplay.innerText = `Words: ${wordCount} | Characters: ${charCount}`;
+        }
+    </script>
+
+</body>
+</html>
